@@ -1,0 +1,43 @@
+/* Navbar utama */
+.navbar {
+  background-color: #007bff; /* warna biru */
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+  font-weight: 600;
+}
+
+.navbar a:hover {
+  background-color: #0056b3;
+}
+
+.navbar a.active {
+  background-color: #0056b3;
+}
+
+/* Area konten (halaman CV/Kontak) */
+.content {
+  padding: 24px;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+.contact-container { max-width:600px; margin:30px auto; padding:20px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.06); border-radius:6px; }
+.form-group { margin-bottom:14px; }
+label { font-weight:600; display:block; margin-bottom:6px; }
+input, textarea { width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box; }
+button[type="submit"] { background:hsl(211, 100%, 50%); color:#fff; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; }
