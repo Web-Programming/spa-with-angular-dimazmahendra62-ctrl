@@ -1,6 +1,6 @@
 /* Styling untuk navbar dan konten utama */
 .navbar {
-  background-color: #333;
+  background-color: #007bff;;
   padding: 15px;
   display: flex;
   justify-content: center;
@@ -17,7 +17,7 @@
 
 .navbar a:hover,
 .navbar a.active {
-  background-color: #575757;
+  background-color: #7393b5;;
 }
 
 .content {
