@@ -6,9 +6,8 @@ import { Register } from './register/register';
 import { Contact } from './contact/contact';
 import { Detail } from './detail/detail';
 
-
 export const routes: Routes = [
-    //mengatur halaman utama aplikasi 
+    //mengatuh halaman utama aplikasi
     {
         path : "",
         component : HomeComponent,
@@ -16,8 +15,8 @@ export const routes: Routes = [
     },
     {
         path : "profile",
-        component :Profile,
-        title : 'Profile Page'
+        component : Profile,
+        //title : 'Profile Page'
     },
     {
         path : "login",
@@ -31,14 +30,14 @@ export const routes: Routes = [
         path : "contact",
         component : Contact,
     },
-    {
-        path : "property/:id",
-        component : Detail,
+     {
+        path: "property/:id",
+        component: Detail,
         title: 'Detail Property - Griya MDP'
     },
     {
-        path : "**",
+        path: "**",
         redirectTo: "",
         pathMatch: 'full'
-    },
+    }
 ];
