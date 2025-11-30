@@ -13,6 +13,35 @@
         <!-- Register Form Card -->
         <div class="card shadow-lg border-0">
           <div class="card-body p-4 p-md-5">
+            <!-- Success Alert -->
+            <div
+              class="alert alert-success alert-dismissible fade show"
+              role="alert"
+              *ngIf="successMessage"
+            >
+              <i class="bi bi-check-circle-fill me-2"></i>{{ successMessage }}
+              <button
+                type="button"
+                class="btn-close"
+                (click)="successMessage = ''"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <!-- Error Alert -->
+            <div
+              class="alert alert-danger alert-dismissible fade show"
+              role="alert"
+              *ngIf="errorMessage"
+            >
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ errorMessage }}
+              <button
+                type="button"
+                class="btn-close"
+                (click)="errorMessage = ''"
+                aria-label="Close"
+              ></button>
+            </div>
             <!-- Form akan berada di sini -->
             <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
               <!-- Form fields -->
@@ -84,19 +113,28 @@
                 <label for="password" class="form-label fw-semibold">
                   <i class="bi bi-lock-fill me-2"></i>Password
                 </label>
-                <input
-                  type="password"
-                  class="form-control form-control-lg"
-                  id="password"
-                  formControlName="password"
-                  [class.is-invalid]="
-                    registerForm.get('password')?.invalid && registerForm.get('password')?.touched
-                  "
-                  placeholder="Minimal 6 karakter"
-                  required
-                />
+                <div class="input-group">
+                  <input
+                    [type]="showPassword ? 'text' : 'password'"
+                    class="form-control form-control-lg"
+                    id="password"
+                    formControlName="password"
+                    [class.is-invalid]="
+                      registerForm.get('password')?.invalid && registerForm.get('password')?.touched
+                    "
+                    placeholder="Minimal 6 karakter"
+                    required
+                  />
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    (click)="showPassword = !showPassword"
+                  >
+                    <i [ngClass]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                  </button>
+                </div>
                 <div
-                  class="invalid-feedback"
+                  class="invalid-feedback d-block"
                   *ngIf="
                     registerForm.get('password')?.invalid && registerForm.get('password')?.touched
                   "
@@ -117,6 +155,54 @@
                   Gunakan kombinasi huruf, angka, dan simbol untuk keamanan maksimal
                 </div>
               </div>
+
+              <!-- Conform password -->
+              <div class="mb-4">
+                <label for="confirmPassword" class="form-label fw-semibold">
+                  <i class="bi bi-lock-fill me-2"></i>Konfirmasi Password
+                </label>
+                <div class="input-group">
+                  <input
+                    [type]="showConfirmPassword ? 'text' : 'password'"
+                    class="form-control form-control-lg"
+                    id="confirmPassword"
+                    formControlName="confirmPassword"
+                    [class.is-invalid]="(registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) || (registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched)"
+                    placeholder="Ketik ulang password"
+                    required
+                  />
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    (click)="showConfirmPassword = !showConfirmPassword"
+                  >
+                    <i [ngClass]="showConfirmPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                  </button>
+                </div>
+                <div
+                  class="invalid-feedback d-block"
+                  *ngIf="
+                    registerForm.get('confirmPassword')?.invalid &&
+                    registerForm.get('confirmPassword')?.touched
+                  "
+                >
+                  <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">
+                    Konfirmasi password harus diisi
+                  </div>
+                </div>
+                <div
+                  class="invalid-feedback d-block"
+                  *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched"
+                >
+                  Password dan Konfirmasi Password tidak cocok
+                </div>
+                <div
+                  class="form-text"
+                  *ngIf="(!registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.valid) && !registerForm.errors?.['mismatch']"
+                >
+                  Pastikan konfirmasi password sama dengan password
+                </div>
+              </div>
               <div class="mb-4">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="terms" />
@@ -131,9 +217,16 @@
                 <button
                   type="submit"
                   class="btn btn-primary btn-lg py-3"
-                  [disabled]="registerForm.invalid"
+                  [disabled]="registerForm.invalid || isLoading"
                 >
-                  <i class="bi bi-person-plus-fill me-2"></i>Daftar Sekarang
+                  <span
+                    *ngIf="isLoading"
+                    class="spinner-border spinner-border-sm me-2"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <i *ngIf="!isLoading" class="bi bi-person-plus-fill me-2"></i>
+                  {{ isLoading ? 'Memproses...' : 'Daftar Sekarang' }}
                 </button>
               </div>
               <div class="text-center">
